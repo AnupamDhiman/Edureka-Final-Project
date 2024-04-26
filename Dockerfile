@@ -8,4 +8,4 @@ FROM docker.io/library/ubuntu:18.04
  ADD **/*.war /usr/local/tomcat/webapps
  EXPOSE 8081
  EXPOSE 8080
- CMD ./usr/local/tomcat/bin/catalina.sh run
+ CMD /usr/local/tomcat/bin/catalina.sh run
