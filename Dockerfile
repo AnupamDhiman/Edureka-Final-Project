@@ -6,5 +6,5 @@ FROM docker.io/library/ubuntu:18.04
  RUN cd /tmp &&  tar xvfz apache-tomcat-9.0.88.tar.gz
  RUN cp -Rv /tmp/apache-tomcat-9.0.88/* /usr/local/tomcat/
  ADD **/*.war /usr/local/tomcat/webapps
- EXPOSE 8080
+ EXPOSE 8081
  CMD /usr/local/tomcat/bin/catalina.sh run
