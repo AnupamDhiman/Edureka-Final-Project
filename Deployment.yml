@@ -1,0 +1,22 @@
+cat deploy.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test1
+  labels:
+    app: test1
+spec:
+  replicas: 2
+  selector:
+   matchLabels:
+    app: test1
+  template:
+    metadata:
+      labels:
+        app: test1
+    spec:
+     containers:
+     - name: cont1
+       image: anupamdhiman/abctechnologies
+       ports:
+       - containerPort: 8080
