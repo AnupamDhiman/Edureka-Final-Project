@@ -1,0 +1,21 @@
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+  - name: install docker
+    yum:
+     name: docker
+     state: present
+    notify:
+    - restart docker
+  - name: run docker container
+    command: sudo docker run -itd -P anupamdhiman/abctechnologies
+  - name: create deployment
+    command: kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f /home/ec2-user/deploy.yml
+  - name: create service
+    command: kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f /home/ec2-user/service.yml
+  handlers:
+  - name: restart docker
+    service:
+     name: docker
+     start: start
