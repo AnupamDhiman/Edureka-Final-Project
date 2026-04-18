@@ -9,7 +9,7 @@
 [![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-E6522C?logo=prometheus)](https://prometheus.io/)
 [![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?logo=terraform)](https://www.terraform.io/)
 
-> A complete DevOps pipeline demonstrating CI/CD, containerization, orchestration, configuration management, and monitoring for a Java web application — built as part of the **Purdue University PG Program in DevOps**
+> A complete DevOps pipeline demonstrating CI/CD, containerization, orchestration, configuration management, and monitoring for a Java web application — built as part of the **Purdue University PG Program in DevOps**.
 
 ---
 

@@ -1,0 +1,41 @@
+# === Build Artifacts ===
+target/
+*.war
+*.jar
+*.class
+
+# === IDE Files ===
+.classpath
+.project
+.settings/
+*.iml
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Maven ===
+pom.xml.bak
+dependency-reduced-pom.xml
+
+# === Docker ===
+.dockerignore
+
+# === Logs ===
+*.log
+
+# === Binary Documents (don't belong in repos) ===
+*.docx
+*.pdf
+*.pptx
+
+# === Environment & Secrets ===
+.env
+*.pem
+*.key
+credentials/

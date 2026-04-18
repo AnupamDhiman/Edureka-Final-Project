@@ -1,0 +1,76 @@
+---
+# Ansible Playbook: Deploy ABC Technologies Application
+# This playbook automates Docker installation, container deployment,
+# and Kubernetes resource creation on target servers.
+
+- name: Deploy ABC Technologies Application
+  hosts: all
+  become: yes
+  become_user: root
+
+  vars:
+    docker_image: "anupamdhiman/abctechnologies:latest"
+    app_port: 8080
+    k8s_manifest_path: "/home/ec2-user"
+
+  tasks:
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+      notify: Restart Docker
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull the latest Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: abc-technologies
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ app_port }}:8080"
+
+    - name: Copy Kubernetes manifests to target
+      copy:
+        src: "{{ item }}"
+        dest: "{{ k8s_manifest_path }}/{{ item | basename }}"
+        mode: '0644'
+      loop:
+        - Deployment.yml
+        - Service.yml
+
+    - name: Create Kubernetes Deployment
+      command: >
+        kubectl --kubeconfig=/etc/kubernetes/admin.conf
+        apply -f {{ k8s_manifest_path }}/Deployment.yml
+
+    - name: Create Kubernetes Service
+      command: >
+        kubectl --kubeconfig=/etc/kubernetes/admin.conf
+        apply -f {{ k8s_manifest_path }}/Service.yml
+
+    - name: Verify Kubernetes pods are running
+      command: >
+        kubectl --kubeconfig=/etc/kubernetes/admin.conf
+        get pods -l app=test1
+      register: pod_status
+
+    - name: Display pod status
+      debug:
+        var: pod_status.stdout_lines
+
+  handlers:
+    - name: Restart Docker
+      service:
+        name: docker
+        state: restarted
